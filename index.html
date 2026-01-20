@@ -11,7 +11,9 @@
         body { font-family: 'Sarabun', sans-serif; }
         .bg-gradient { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); }
         .digit-box { @apply w-12 h-14 border-2 border-blue-600 rounded-lg flex items-center justify-center text-3xl font-black text-blue-800 bg-white shadow-sm; }
-        
+    const SUPABASE_URL = 'https://cefywmpxocgxfxrdpoyb.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_unkv8_6kbQS6sZ1H1OGdEw_1dKcRgVn';
+    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         /* สไตล์วงกลมจับเวลา */
         .timer-svg { transform: rotate(-90deg); }
         .timer-bg { fill: none; stroke: #f3f4f6; stroke-width: 6; }
@@ -256,6 +258,7 @@
 </body>
 
 </html>
+
 
 
 
