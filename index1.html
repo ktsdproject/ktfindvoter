@@ -6,35 +6,16 @@
     <title>ระบบตรวจสอบสิทธิเลือกตั้งล่วงหน้า</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
     <style>
         body { font-family: 'Sarabun', sans-serif; }
         .bg-gradient { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); }
-        
-        /* สไตล์ช่องตัวเลขรหัสเขต */
-        .digit-box { 
-            width: 3rem; height: 3.5rem; border: 2px solid #2563eb; border-radius: 0.5rem; 
-            display: flex; align-items: center; justify-content: center; 
-            font-size: 1.875rem; font-weight: 900; color: #1e3a8a; background-color: white; 
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05); 
-        }
-
-        /* Loading Animation */
+        .digit-box { width: 3rem; height: 3.5rem; border: 2px solid #2563eb; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; font-size: 1.875rem; font-weight: 900; color: #1e3a8a; background-color: white; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
         .loader { border-top-color: #3498db; animation: spinner 1.5s linear infinite; }
         @keyframes spinner { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        /* Timer Circle */
         .timer-svg { transform: rotate(-90deg); }
         .timer-bg { fill: none; stroke: #f3f4f6; stroke-width: 6; }
-        .timer-progress { 
-            fill: none; stroke: #10b981; stroke-width: 6; stroke-linecap: round; 
-            stroke-dasharray: 314; stroke-dashoffset: 314; transition: stroke-dashoffset 3s linear; 
-        }
-        @keyframes pop-in {
-            0% { transform: scale(0); opacity: 0; }
-            80% { transform: scale(1.2); opacity: 1; }
-            100% { transform: scale(1); opacity: 1; }
-        }
+        .timer-progress { fill: none; stroke: #10b981; stroke-width: 6; stroke-linecap: round; stroke-dasharray: 314; stroke-dashoffset: 314; transition: stroke-dashoffset 3s linear; }
+        @keyframes pop-in { 0% { transform: scale(0); opacity: 0; } 80% { transform: scale(1.2); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
         .animate-pop { animation: pop-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
     </style>
 </head>
@@ -42,7 +23,7 @@
 
     <div class="bg-gradient text-white pb-24 pt-10 px-4 text-center shadow-lg">
         <h1 class="text-3xl font-bold mb-2">ตรวจสอบสิทธิเลือกตั้งล่วงหน้า</h1>
-        <p class="text-blue-100 opacity-90">สำหรับวันที่ 1 กุมภาพันธ์ 2569 สำนักงานเขตคลองเตย</p>
+        <p class="text-blue-100 opacity-90">วันที่ 1 กุมภาพันธ์ 2569 สำนักงานเขตคลองเตย</p>
     </div>
 
     <div class="max-w-md mx-auto -mt-16 px-4 pb-12">
@@ -75,7 +56,7 @@
                     </div>
                 </div>
 
-                <div class="bg-gray-50 p-5 rounded-2xl border border-gray-200 text-center leading-relaxed">
+                <div class="bg-gray-50 p-5 rounded-2xl border border-gray-200 text-center">
                     <p class="text-xs text-gray-400 font-bold uppercase mb-2">ข้อมูลพื้นที่เลือกตั้ง</p>
                     <p class="text-lg text-gray-700">
                         เขตเลือกตั้งที่ <span id="res-const" class="font-black text-gray-900 text-xl">--</span><br>
@@ -108,33 +89,28 @@
             <h3 id="inter-title" class="text-2xl font-bold text-gray-800 mb-2">กำลังเตรียมไฟล์...</h3>
             <div class="relative w-32 h-32 flex items-center justify-center mt-6">
                 <div id="timer-container" class="absolute inset-0">
-                    <svg class="timer-svg w-full h-full">
-                        <circle class="timer-bg" cx="64" cy="64" r="50"></circle>
-                        <circle id="timer-bar" class="timer-progress" cx="64" cy="64" r="50"></circle>
-                    </svg>
+                    <svg class="timer-svg w-full h-full"><circle class="timer-bg" cx="64" cy="64" r="50"></circle><circle id="timer-bar" class="timer-progress" cx="64" cy="64" r="50"></circle></svg>
                     <div id="timer-text" class="absolute inset-0 flex items-center justify-center text-4xl font-black text-gray-800">3</div>
                 </div>
                 <button id="inter-close-btn" onclick="showLoadedPdf()" class="hidden w-24 h-24 bg-emerald-500 text-white rounded-full shadow-2xl flex items-center justify-center text-5xl font-bold transition-all z-10">✓</button>
             </div>
-            <p id="inter-status" class="mt-8 text-gray-500 font-medium leading-relaxed">กรุณารอสักครู่...</p>
         </div>
     </div>
 
     <div id="pdf-modal" class="hidden fixed inset-0 z-[70] bg-black flex flex-col">
         <div class="flex justify-between items-center p-4 bg-gray-900 text-white">
             <span class="font-bold flex items-center gap-2">📄 <span id="pdf-header-title">เอกสารแนบ</span></span>
-            <button onclick="closePdf()" class="bg-white/10 hover:bg-white/20 px-6 py-2 rounded-xl text-sm font-bold transition-all">ปิด ✕</button>
+            <button onclick="closePdf()" class="bg-white/10 px-6 py-2 rounded-xl text-sm font-bold">ปิด ✕</button>
         </div>
         <iframe id="pdf-frame" class="w-full h-full border-0 bg-white" src=""></iframe>
     </div>
 
     <script>
-        // *** สำคัญ: นำ URL จาก Google Apps Script มาใส่ตรงนี้ ***
         const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbz8byrKG31kOoTpYRcmKGrUnheNf9gWnozMVdcVT2MFF7W-l7KBXaeOHj_mxq89DJVM/exec';
 
         let currentVoter = null;
 
-        // จัดการฟอร์แมตเลขบัตรขณะพิมพ์
+        // ฟอร์แมตเลขบัตร
         document.getElementById('id-card').addEventListener('input', (e) => {
             let v = e.target.value.replace(/\D/g, '').substring(0, 13);
             let f = v.length > 0 ? v[0] : '';
@@ -145,7 +121,6 @@
             e.target.value = f;
         });
 
-        // ฟังก์ชันค้นหาข้อมูล
         async function searchVoter() {
             const cleanId = document.getElementById('id-card').value.replace(/-/g, '');
             if (cleanId.length !== 13) { alert('กรุณากรอกเลขบัตรให้ครบ 13 หลัก'); return; }
@@ -155,7 +130,6 @@
             document.getElementById('result-card').classList.add('hidden');
 
             try {
-                // เรียกผ่าน GET เพื่อลดปัญหา CORS
                 const response = await fetch(`${GAS_WEB_APP_URL}?id_card=${cleanId}`);
                 const data = await response.json();
                 
@@ -168,37 +142,32 @@
                     alert('ไม่พบข้อมูลผู้มีสิทธิเลือกตั้ง');
                 }
             } catch (e) {
-                console.error(e);
-                alert('การเชื่อมต่อขัดข้อง: ตรวจสอบ URL หรืออินเทอร์เน็ตของท่าน');
+                alert('ไม่สามารถเชื่อมต่อระบบได้ กรุณาลองใหม่ผ่านหน้าเว็บ GitHub');
             } finally {
                 document.getElementById('btn-loader').classList.add('hidden');
                 document.getElementById('btn-text').innerText = 'ตรวจสอบข้อมูล';
             }
         }
 
-        // ฟังก์ชันแสดงข้อมูลบนหน้าจอ
         function renderResult() {
             document.getElementById('res-name').innerText = currentVoter.name;
             document.getElementById('res-batch').innerText = currentVoter.batch || '-';
             document.getElementById('res-seq').innerText = currentVoter.sequence || '-';
             document.getElementById('res-const').innerText = currentVoter.constituency || '-';
             document.getElementById('res-prov').innerText = currentVoter.province || '-';
-
             const container = document.getElementById('res-code-container');
             container.innerHTML = (currentVoter.constituency_code || '----').split('').map(c => `<div class="digit-box">${c}</div>`).join('');
-
             document.getElementById('result-card').classList.remove('hidden');
             setTimeout(() => { document.getElementById('result-card').scrollIntoView({ behavior: 'smooth' }); }, 100);
         }
 
-        // ฟังก์ชันจัดการ PDF Timer
         function handlePdfFlow(type) {
             const config = {
                 candidate: { url: currentVoter.candidate_link, img: 'https://cdn-icons-png.flaticon.com/512/1022/1022204.png', title: 'ผู้สมัคร ส.ส. แบ่งเขต' },
                 party: { url: currentVoter.party_link, img: 'https://cdn-icons-png.flaticon.com/512/2633/2633807.png', title: 'รายชื่อพรรคการเมือง' }
             };
             const item = config[type];
-            if (!item || !item.url) { alert('ไม่พบลิงก์เอกสาร'); return; }
+            if (!item || !item.url) { alert('ไม่พบลิงก์ไฟล์ในระบบ'); return; }
 
             let finalUrl = item.url.includes('drive.google.com') ? item.url.replace(/\/view.*/, '/preview') : item.url;
             document.getElementById('pdf-frame').src = finalUrl;
