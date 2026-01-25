@@ -23,7 +23,7 @@
 
     <div class="bg-gradient text-white pb-24 pt-10 px-4 text-center shadow-lg">
         <h1 class="text-3xl font-bold mb-2">ตรวจสอบสิทธิเลือกตั้งล่วงหน้า</h1>
-        <p class="text-blue-100 opacity-90">วันที่ 1 กุมภาพันธ์ 2569 สำนักงานเขตคลองเตย</p>
+        <p class="text-blue-100 opacity-90">สำนักงานเขตคลองเตย</p>
     </div>
 
     <div class="max-w-md mx-auto -mt-16 px-4 pb-12">
@@ -57,10 +57,9 @@
                 </div>
 
                 <div class="bg-gray-50 p-5 rounded-2xl border border-gray-200 text-center">
-                    <p class="text-xs text-gray-400 font-bold uppercase mb-2">ข้อมูลพื้นที่เลือกตั้ง</p>
-                    <p class="text-lg text-gray-700">
-                        เขตเลือกตั้งที่ <span id="res-const" class="font-black text-gray-900 text-xl">--</span><br>
-                        จังหวัด <span id="res-prov" class="font-black text-gray-900 text-xl">----------</span>
+                    <p class="text-xs text-gray-400 font-bold mb-2 uppercase">เขตเลือกตั้ง / จังหวัด</p>
+                    <p class="text-lg text-gray-700 font-bold">
+                        เขตที่ <span id="res-const">--</span> | จ.<span id="res-prov">----------</span>
                     </p>
                 </div>
 
@@ -72,12 +71,21 @@
                 <hr class="border-dashed border-gray-300">
 
                 <div class="space-y-4">
-                    <button onclick="handlePdfFlow('candidate')" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-5 rounded-2xl shadow-lg transition-all flex justify-center items-center">
-                        <span>ผู้สมัคร ส.ส. แบ่งเขต (สีเขียว)</span>
+                    <button onclick="handlePdfFlow('candidate')" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-5 rounded-2xl shadow-lg transition-all flex justify-center items-center text-center leading-tight">
+                        <span>ผู้สมัคร ส.ส. แบบแบ่งเขต<br><small class="text-xs opacity-80">บัตรสีเขียว</small></span>
                     </button>
-                    <button onclick="handlePdfFlow('party')" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-5 rounded-2xl shadow-lg transition-all flex justify-center items-center">
-                        <span>รายชื่อพรรคการเมือง (สีชมพู)</span>
+                    <button onclick="handlePdfFlow('party')" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-5 rounded-2xl shadow-lg transition-all flex justify-center items-center text-center leading-tight">
+                        <span>รายชื่อพรรคการเมือง<br><small class="text-xs opacity-80">บัตรสีชมพู</small></span>
                     </button>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <button onclick="handlePdfFlow('member')" class="bg-white border-2 border-gray-200 text-gray-700 hover:bg-gray-50 font-bold py-4 rounded-2xl shadow-sm text-sm flex flex-col items-center justify-center gap-1 transition-all">
+                            <span class="text-lg">⚪</span><span>ส.ส.แบบบัญชีรายชื่อ</span>
+                        </button>
+                        <button onclick="handlePdfFlow('pm')" class="bg-white border-2 border-gray-200 text-gray-700 hover:bg-gray-50 font-bold py-4 rounded-2xl shadow-sm text-sm flex flex-col items-center justify-center gap-1 transition-all">
+                            <span class="text-lg">👔</span><span>แคนดิเดตนายกฯ</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -86,7 +94,7 @@
     <div id="inter-popup" class="hidden fixed inset-0 z-[60] bg-white flex flex-col items-center justify-center p-10 text-center">
         <div class="max-w-xs w-full flex flex-col items-center">
             <img id="inter-img" src="" class="w-40 h-40 mb-6 object-contain">
-            <h3 id="inter-title" class="text-2xl font-bold text-gray-800 mb-2">กำลังเตรียมไฟล์...</h3>
+            <h3 id="inter-title" class="text-2xl font-bold text-gray-800 mb-2 font-sarabun">กำลังเตรียมไฟล์...</h3>
             <div class="relative w-32 h-32 flex items-center justify-center mt-6">
                 <div id="timer-container" class="absolute inset-0">
                     <svg class="timer-svg w-full h-full"><circle class="timer-bg" cx="64" cy="64" r="50"></circle><circle id="timer-bar" class="timer-progress" cx="64" cy="64" r="50"></circle></svg>
@@ -99,18 +107,19 @@
 
     <div id="pdf-modal" class="hidden fixed inset-0 z-[70] bg-black flex flex-col">
         <div class="flex justify-between items-center p-4 bg-gray-900 text-white">
-            <span class="font-bold flex items-center gap-2">📄 <span id="pdf-header-title">เอกสารแนบ</span></span>
+            <span class="font-bold">📄 <span id="pdf-header-title">เอกสาร</span></span>
             <button onclick="closePdf()" class="bg-white/10 px-6 py-2 rounded-xl text-sm font-bold">ปิด ✕</button>
         </div>
         <iframe id="pdf-frame" class="w-full h-full border-0 bg-white" src=""></iframe>
     </div>
 
     <script>
+        // *** ใส่ URL ของ Google Script (Web App) ของคุณที่นี่ ***
         const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbz8byrKG31kOoTpYRcmKGrUnheNf9gWnozMVdcVT2MFF7W-l7KBXaeOHj_mxq89DJVM/exec';
 
         let currentVoter = null;
 
-        // ฟอร์แมตเลขบัตร
+        // ฟอร์แมตเลขบัตรขณะพิมพ์
         document.getElementById('id-card').addEventListener('input', (e) => {
             let v = e.target.value.replace(/\D/g, '').substring(0, 13);
             let f = v.length > 0 ? v[0] : '';
@@ -142,7 +151,7 @@
                     alert('ไม่พบข้อมูลผู้มีสิทธิเลือกตั้ง');
                 }
             } catch (e) {
-                alert('ไม่สามารถเชื่อมต่อระบบได้ กรุณาลองใหม่ผ่านหน้าเว็บ GitHub');
+                alert('การเชื่อมต่อขัดข้อง กรุณาลองใหม่ภายหลัง');
             } finally {
                 document.getElementById('btn-loader').classList.add('hidden');
                 document.getElementById('btn-text').innerText = 'ตรวจสอบข้อมูล';
@@ -164,10 +173,12 @@
         function handlePdfFlow(type) {
             const config = {
                 candidate: { url: currentVoter.candidate_link, img: 'https://cdn-icons-png.flaticon.com/512/1022/1022204.png', title: 'ผู้สมัคร ส.ส. แบ่งเขต' },
-                party: { url: currentVoter.party_link, img: 'https://cdn-icons-png.flaticon.com/512/2633/2633807.png', title: 'รายชื่อพรรคการเมือง' }
+                party: { url: currentVoter.party_link, img: 'https://cdn-icons-png.flaticon.com/512/2633/2633807.png', title: 'รายชื่อพรรคการเมือง' },
+                member: { url: currentVoter.party_member_link, img: 'https://cdn-icons-png.flaticon.com/512/3048/3048122.png', title: 'ส.ส.แบบบัญชีรายชื่อ' },
+                pm: { url: currentVoter.pm_candidate_link, img: 'https://cdn-icons-png.flaticon.com/512/1014/1014569.png', title: 'แคนดิเดตนายกรัฐมนตรี' }
             };
             const item = config[type];
-            if (!item || !item.url) { alert('ไม่พบลิงก์ไฟล์ในระบบ'); return; }
+            if (!item || !item.url) { alert('ไม่พบลิงก์เอกสารในระบบ'); return; }
 
             let finalUrl = item.url.includes('drive.google.com') ? item.url.replace(/\/view.*/, '/preview') : item.url;
             document.getElementById('pdf-frame').src = finalUrl;
